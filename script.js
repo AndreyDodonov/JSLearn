@@ -15,24 +15,31 @@ let money = +prompt('Ваш месячный доход?'),
     period = 5,
     budgetDay = budgetMonth / 30;
 
-if (budgetDay >= 800) {
-    console.log('Высокий уровень дхода');
-} else if (budgetDay >= 300) {
-    console.log('Средний уровень дохода');
-} else if (budgetDay < 0) {
-    console.log('Что-то пошло не так');
-} else if (budgetDay < 300) {
-    console.log('Низкий уровень дохода');
+function getStatusIncome() {
+    if (budgetDay >= 800) {
+        return ('Высокий уровень дхода');
+    } else if (budgetDay >= 300) {
+        return ('Средний уровень дохода');
+    } else if (budgetDay < 0) {
+        return ('Что-то пошло не так');
+    } else if (budgetDay < 300) {
+        return ('Низкий уровень дохода');
+    }
 }
 
+function getExpensesMonth(expension1, expension2) {
+    return (expension1 + expension2);
+}
 
 console.log('Месячный бюджет: ' + budgetMonth);
 console.log('Срок достижения цели: ' + Math.ceil(term) + ' месяцев');
 console.log(typeof (money));
 console.log(typeof (income));
 console.log(typeof (deposit));
-console.log(income.length);
+console.log('Длина income ' + income.length);
 console.log('Период ' + period + ' месяцев');
 console.log('Цель заработать ' + mission + ' рублей');
 console.log(addExpenses.toLowerCase().split(', '));
 console.log('Бюджет на день: ' + Math.floor(budgetDay));
+console.log('Уровень дохода: ', getStatusIncome());
+console.log('Сумма расходов: ', getExpensesMonth(numExpens1, numExpens2));
