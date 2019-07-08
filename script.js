@@ -1,6 +1,5 @@
 'use strict';
 
-
 let money = +prompt('Ваш месячный доход?'),
     income = 'freelance',
     addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую'),
@@ -13,7 +12,8 @@ let money = +prompt('Ваш месячный доход?'),
     mission = 2000000,
     term = mission / budgetMonth,
     period = 5,
-    budgetDay = budgetMonth / 30;
+    budgetDay = budgetMonth / 30,
+    accumulatedMonth;
 
 function getStatusIncome() {
     if (budgetDay >= 800) {
@@ -31,15 +31,26 @@ function getExpensesMonth(expension1, expension2) {
     return (expension1 + expension2);
 }
 
-console.log('Месячный бюджет: ' + budgetMonth);
-console.log('Срок достижения цели: ' + Math.ceil(term) + ' месяцев');
-console.log(typeof (money));
-console.log(typeof (income));
-console.log(typeof (deposit));
-console.log('Длина income ' + income.length);
-console.log('Период ' + period + ' месяцев');
-console.log('Цель заработать ' + mission + ' рублей');
-console.log(addExpenses.toLowerCase().split(', '));
-console.log('Бюджет на день: ' + Math.floor(budgetDay));
+function getAccumulatedMonth(expension1, expension2, overallIncome) {
+    accumulatedMonth = overallIncome - (expension1 + expension2);
+    return accumulatedMonth;
+}
+
+getAccumulatedMonth(numExpens1, numExpens2, money);
+
+function getTargetMonth(accumulatedMonth, mission) {
+    return (mission / accumulatedMonth);
+}
+
+let showTypeOf = function (item) {
+    console.log('тип переменной ' + item + ': ' + (typeof (item)));
+};
+
+
+/* output */
+showTypeOf(money);
+showTypeOf(income);
+showTypeOf(deposit);
 console.log('Уровень дохода: ', getStatusIncome());
-console.log('Сумма расходов: ', getExpensesMonth(numExpens1, numExpens2));
+console.log('Срок достижения цели: ', Math.floor(getTargetMonth(accumulatedMonth, mission)) + ' месяцев');
+console.log('Накопления за период ' + period + ' месяцев: ' + (money * period));
