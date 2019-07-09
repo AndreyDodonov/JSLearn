@@ -41,8 +41,9 @@ let epxensesMonth = function () {
         } else if (i === 1) {
             expens2 = prompt('Какие обязательные ежемесячные расходы у вас есть?');
         }
-
+        do {
         sum += +prompt('Во сколько это обойдётся?');
+        } while (isNaN(sum) || sum == '' || sum == null);
     }
     return sum;
 };
