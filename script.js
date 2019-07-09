@@ -76,5 +76,6 @@ let showTypeOf = function (item) {
 
 /* output */
 console.log('Уровень дохода: ', getStatusIncome());
-console.log('Срок достижения цели: ', Math.floor(targetPeriod()) + ' месяцев');
+console.log((targetPeriod() > 0) ? 'Срок достижения цели: ' +  Math.floor(targetPeriod()) + ' месяцев' :
+ 'цель не будет достигнута ((');                                                 
 console.log('Накопления за период ' + period + ' месяцев: ' + (accumulateMonth() * period));
