@@ -50,11 +50,6 @@ appData.asking();
 appData.budgetDay();
 let budgetMonth = appData.budgetMonth();
 
-
-// let budgetDay = function () {
-//     return (money / 30);
-// };
-
 function getStatusIncome() {
     if (appData.budgetDay >= 800) {
         return ('Высокий уровень дхода');
@@ -66,26 +61,6 @@ function getStatusIncome() {
         return ('Низкий уровень дохода');
     }
 }
-
-// let expens1,
-//     expens2;
-
-// let epxensesMonth = function () {
-//     let sum = 0;
-//     for (let i = 0; i < 2; i++) {
-//         if (i === 0) {
-//             expens1 = prompt('Какие обязательные ежемесячные расходы у вас есть?');
-//         } else if (i === 1) {
-//             expens2 = prompt('Какие обязательные ежемесячные расходы у вас есть?');
-//         }
-//         do {
-//             sum += +prompt('Во сколько это обойдётся?');
-//         } while (isNaN(sum) || sum == '' || sum == null);
-//     }
-//     return sum;
-// };
-
-// let expensesAmount = epxensesMonth();
 
 let expensePeriod = function () {
     return (budgetMonth * appData.period);
