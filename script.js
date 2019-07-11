@@ -18,32 +18,36 @@ let appData = {
     mission: 50000,
     period: 3,
     budget: money,
-    budgetDay: 0,
+    budgetDay: function () {
+        this.budgetDay = (money / 30);
+        console.log('дневной бюджет: ' + this.budgetDay);
+    },
     budgetMonth: 0,
     expensesMonth: 0,
-    asking: function () {
+    asking: function() {
         let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
         appData.addExpenses = addExpenses.toLowerCase().split(',');
         appData.deposit = confirm('Есть ли у вас депозит в банке?');
-
-    }
+    },
+    
 };
 
 appData.asking();
+appData.budgetDay();
 
 
-let budgetDay = function () {
-    return (money / 30);
-};
+// let budgetDay = function () {
+//     return (money / 30);
+// };
 
 function getStatusIncome() {
-    if (budgetDay() >= 800) {
+    if (appData.budgetDay >= 800) {
         return ('Высокий уровень дхода');
-    } else if (budgetDay() >= 300) {
+    } else if (appData.budgetDay >= 300) {
         return ('Средний уровень дохода');
-    } else if (budgetDay() < 0) {
+    } else if (appData.budgetDay < 0) {
         return ('Что-то пошло не так');
-    } else if (budgetDay() < 300) {
+    } else if (appData.budgetDay < 300) {
         return ('Низкий уровень дохода');
     }
 }
@@ -91,6 +95,7 @@ let targetPeriod = function () {
 
 
 /* output */
+
 console.log('Расходы за месяц: ' + expensesAmount);
 console.log('Уровень дохода: ', getStatusIncome());
 console.log((targetPeriod() > 0) ? 'Срок достижения цели: ' + Math.floor(targetPeriod()) + ' месяцев' :
