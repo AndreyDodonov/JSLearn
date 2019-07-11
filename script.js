@@ -22,7 +22,21 @@ let appData = {
         this.budgetDay = (money / 30);
         console.log('дневной бюджет: ' + this.budgetDay);
     },
-    budgetMonth: 0,
+    budgetMonth: function () {
+        let sum = 0;
+        for (let i = 0; i < 2; i++) {
+            if (i === 0) {
+                prompt('Какие обязательные ежемесячные расходы у вас есть?');
+            } else if (i === 1) {
+                prompt('Какие обязательные ежемесячные расходы у вас есть?');
+            }
+            do {
+                sum += +prompt('Во сколько это обойдётся?');
+            } while (isNaN(sum) || sum == '' || sum == null);
+        }
+        return sum;
+    },
+    
     expensesMonth: 0,
     asking: function() {
         let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
@@ -34,6 +48,7 @@ let appData = {
 
 appData.asking();
 appData.budgetDay();
+let budgetMonth = appData.budgetMonth();
 
 
 // let budgetDay = function () {
@@ -52,32 +67,32 @@ function getStatusIncome() {
     }
 }
 
-let expens1,
-    expens2;
+// let expens1,
+//     expens2;
 
-let epxensesMonth = function () {
-    let sum = 0;
-    for (let i = 0; i < 2; i++) {
-        if (i === 0) {
-            expens1 = prompt('Какие обязательные ежемесячные расходы у вас есть?');
-        } else if (i === 1) {
-            expens2 = prompt('Какие обязательные ежемесячные расходы у вас есть?');
-        }
-        do {
-            sum += +prompt('Во сколько это обойдётся?');
-        } while (isNaN(sum) || sum == '' || sum == null);
-    }
-    return sum;
-};
+// let epxensesMonth = function () {
+//     let sum = 0;
+//     for (let i = 0; i < 2; i++) {
+//         if (i === 0) {
+//             expens1 = prompt('Какие обязательные ежемесячные расходы у вас есть?');
+//         } else if (i === 1) {
+//             expens2 = prompt('Какие обязательные ежемесячные расходы у вас есть?');
+//         }
+//         do {
+//             sum += +prompt('Во сколько это обойдётся?');
+//         } while (isNaN(sum) || sum == '' || sum == null);
+//     }
+//     return sum;
+// };
 
-let expensesAmount = epxensesMonth();
+// let expensesAmount = epxensesMonth();
 
 let expensePeriod = function () {
-    return (expensesAmount * appData.period);
+    return (budgetMonth * appData.period);
 };
 
 let accumulateMonth = function () {
-    return (money - expensesAmount);
+    return (money - budgetMonth);
 };
 
 let budgetPeriod = function () {
@@ -96,7 +111,7 @@ let targetPeriod = function () {
 
 /* output */
 
-console.log('Расходы за месяц: ' + expensesAmount);
+console.log('Расходы за месяц: ' + budgetMonth);
 console.log('Уровень дохода: ', getStatusIncome());
 console.log((targetPeriod() > 0) ? 'Срок достижения цели: ' + Math.floor(targetPeriod()) + ' месяцев' :
     'цель не будет достигнута ((');
