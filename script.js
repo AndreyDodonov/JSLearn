@@ -36,13 +36,17 @@ let appData = {
         return (this.budget - this.expensesMonth);
     },
     asking: function () {
+        if (confirm('Есть ли у вас дополнительный заработок?')) {
+            let itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'Таксую');
+            let cashIncome = +prompt('Сколько зарабатываете этим?', 10000);
+            this.income[itemIncome] = cashIncome;
+        } 
         let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую',
             'расх1, расх2, расх3');
         this.addExpenses = addExpenses.toLowerCase().split(',');
         this.deposit = confirm('Есть ли у вас депозит в банке?');
         this.getExpensesMonth();
     },
-
     targetPeriod: function () {
         return (appData.mission / this.budgetMonth());
     },
@@ -78,7 +82,6 @@ function appDataShow() {
 }
 
 /* output */
-
 
 console.log('Расходы за месяц: ' + appData.expensesMonth);
 console.log('Уровень дохода: ', appData.getStatusIncome());
