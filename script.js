@@ -25,7 +25,7 @@ let appData = {
     getExpensesMonth: function () {
         let sum = 0;
         for (let i = 0; i < 2; i++) {
-            const key = prompt('Какие обязательные ежемесячные расходы у вас есть?', 'Расход' + i);
+            const key = prompt('Какие обязательные ежемесячные расходы у вас есть?','№'+ (i+1) + ' Расход' );
             const value = +prompt('Во сколько это обойдётся?', 10000);
             appData.expenses[key] = value;
             this.expensesMonth += value;
