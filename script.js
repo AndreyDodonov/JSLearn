@@ -19,7 +19,7 @@ let appData = {
     period: 3,
     budget: money,
     budgetDay: function () {
-        this.budgetDay = (this.budget / 30);
+       return (this.budgetMonth() / 30);
     },
     accumulateExpensesMonth: 0,
     expensesMonth: function () {
@@ -56,13 +56,13 @@ let appData = {
         return (this.budgetPeriod() - this.expensePeriod());
     },
     getStatusIncome: function () {
-        if (this.budgetDay >= 800) {
+        if (this.budgetDay() >= 800) {
             return ('Высокий уровень дохода');
-        } else if (this.budgetDay >= 300) {
+        } else if (this.budgetDay() >= 300) {
             return ('Средний уровень дохода');
-        } else if (this.budgetDay < 0) {
+        } else if (this.budgetDay() < 0) {
             return ('Что-то пошло не так');
-        } else if (this.budgetDay < 300) {
+        } else if (this.budgetDay() < 300) {
             return ('Низкий уровень дохода');
         }
     }
@@ -79,6 +79,7 @@ function appDataShow() {
 
 /* output */
 
+console.log('Дневной бюджет: ' + appData.budgetDay());
 console.log('Расходы за месяц: ' + appData.accumulateExpensesMonth);
 console.log('Уровень дохода: ', appData.getStatusIncome());
 console.log((appData.targetPeriod() > 0) ? 'Срок достижения цели: ' + Math.ceil(appData.targetPeriod()) + ' месяцев' :
