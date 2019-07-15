@@ -15,6 +15,8 @@ let appData = {
     expenses: {},
     addExpenses: [],
     deposit: false,
+    percentDeposit: 0,
+    moneyDeposit: 0,
     mission: 50000,
     period: 3,
     budget: money,
@@ -47,7 +49,7 @@ let appData = {
         this.deposit = confirm('Есть ли у вас депозит в банке?');
         this.getExpensesMonth();
     },
-    targetPeriod: function () {
+    getTargetMonth: function () {
         return (appData.mission / this.budgetMonth());
     },
     budgetPeriod: function () {
@@ -85,7 +87,7 @@ function appDataShow() {
 
 console.log('Расходы за месяц: ' + appData.expensesMonth);
 console.log('Уровень дохода: ', appData.getStatusIncome());
-console.log((appData.targetPeriod() > 0) ? 'Срок достижения цели: ' + Math.ceil(appData.targetPeriod()) + ' месяцев' :
+console.log((appData.getTargetMonth() > 0) ? 'Срок достижения цели: ' + Math.ceil(appData.getTargetMonth()) + ' месяцев' :
     'цель не будет достигнута ((');
 console.log('Накопления за период ' + appData.period + ' месяцев: ' + appData.incomePeriod());
 console.log('=================================');
