@@ -21,7 +21,7 @@ let appData = {
     period: 3,
     budget: money,
     budgetDay: function () {
-        return (this.getBudget() / 30);
+        return (this.budget  / 30);
     },
     expensesMonth: 0,
     getExpensesMonth: function () {
@@ -52,7 +52,7 @@ let appData = {
                 cashIncome = +prompt('Сколько зарабатываете этим?', 10000);
             } while (isNaN(cashIncome) || cashIncome == '' || cashIncome == null);
             this.income[itemIncome] = cashIncome;
-            this.getBudget += cashIncome;
+            this.budget += cashIncome;
         }
         let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую',
             'расх1, расх2, расх3');
@@ -62,10 +62,10 @@ let appData = {
         this.getExpensesMonth();
     },
     getTargetMonth: function () {
-        return (appData.mission / this.getBudget());
+        return (appData.mission / (this.budget - this.expensesMonth));
     },
     budgetPeriod: function () {
-        return (this.budget * this.period); // TODO: приплюсовать доп доход и процент с депозита
+        return (this.budget * this.period); 
     },
     expensePeriod: function () {
         return (this.expensesMonth * this.period);
@@ -92,13 +92,16 @@ let appData = {
             do {
                 this.moneyDeposit = +prompt('Какая сумма на депозите?', 10000);
             } while (isNaN(this.moneyDeposit) || this.moneyDeposit == '' || this.moneyDeposit == null);
+            this.budget += ((this.moneyDeposit / (this.percentDeposit / 12)) * this.period);
+            // (сумма /(процент в месяц) * период накопления)
         }
     },
     calcSavedMoney: function () {
-        return (this.getBudget() * this.period);
+        return (this.budget * this.period);
     }
 };
 
+appData.budget = appData.getBudget();
 appData.asking();
 appData.budgetDay();
 
@@ -108,8 +111,14 @@ function appDataShow() {
     }
 }
 
+function addsExpensesShow() {
+    console.log('Доходы: ' + appData.income);
+} 
+
 /* output */
 
+addsExpensesShow();
+console.log('=================================');
 console.log('Расходы за месяц: ' + appData.expensesMonth);
 console.log('Уровень дохода: ', appData.getStatusIncome());
 console.log((appData.getTargetMonth() > 0) ? 'Срок достижения цели: ' + Math.ceil(appData.getTargetMonth()) +
