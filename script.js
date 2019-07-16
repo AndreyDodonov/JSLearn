@@ -21,7 +21,7 @@ let appData = {
     period: 3,
     budget: money,
     budgetDay: function () {
-        return (this.budget  / 30);
+        return (this.budget / 30);
     },
     expensesMonth: 0,
     getExpensesMonth: function () {
@@ -65,7 +65,7 @@ let appData = {
         return (appData.mission / (this.budget - this.expensesMonth));
     },
     budgetPeriod: function () {
-        return (this.budget * this.period); 
+        return (this.budget * this.period);
     },
     expensePeriod: function () {
         return (this.expensesMonth * this.period);
@@ -111,13 +111,29 @@ function appDataShow() {
     }
 }
 
+function addIncomeShow() {
+    let output = '';
+    console.log('Возможные доходы: ');
+    for (let key in appData.income) {
+        output += key + ': ' + appData.income[key] + ' ';
+    }
+    console.log(output);
+}
+
 function addsExpensesShow() {
-    console.log('Доходы: ' + appData.income);
-} 
+    let output = '';
+    console.log('Возможные расходы: ');
+    for (let key in appData.expenses) {
+        output += key + ': ' + appData.expenses[key] + ' ';
+    }
+    console.log( output);
+}
 
 /* output */
 
 addsExpensesShow();
+addIncomeShow();
+
 console.log('=================================');
 console.log('Расходы за месяц: ' + appData.expensesMonth);
 console.log('Уровень дохода: ', appData.getStatusIncome());
