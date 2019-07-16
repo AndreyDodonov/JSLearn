@@ -121,12 +121,17 @@ function addIncomeShow() {
 }
 
 function addsExpensesShow() {
-    let output = '';
+    let counter = 0;
+    for (let key in appData.expenses) {
+        counter++;
+    }
+    
+    let arr = [];
     console.log('Возможные расходы: ');
     for (let key in appData.expenses) {
-        output += key + ': ' + appData.expenses[key] + ' ';
+        arr.push (key + ': ' + appData.expenses[key]) ;
     }
-    console.log( output);
+    console.log(arr.join(', ') );
 }
 
 /* output */
