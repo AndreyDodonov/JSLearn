@@ -21,20 +21,24 @@ let appData = {
     period: 3,
     budget: money,
     budgetDay: function () {
-       return (this.budgetMonth() / 30);
+       return (this.getBudget() / 30);
     },
     expensesMonth: 0,
     getExpensesMonth: function () {
-        let sum = 0;
+        let value = 0;
+        let key;
         for (let i = 0; i < 2; i++) {
-            const key = prompt('Какие обязательные ежемесячные расходы у вас есть?','№'+ (i+1) + ' Расход' );
-            const value = +prompt('Во сколько это обойдётся?', 10000);
+            do {
+            key = prompt('Какие обязательные ежемесячные расходы у вас есть?','№'+ (i+1) + ' Расход' );
+            } while (key == '' || key == null );
+            do {
+             value = +prompt('Во сколько это обойдётся?', 10000);
+            } while (isNaN(value) || value == '' || value == null );
             appData.expenses[key] = value;
             this.expensesMonth += value;
         }
-        return sum;
     },
-    budgetMonth: function () {
+    getBudget: function () {
         return (this.budget - this.expensesMonth);
     },
     asking: function () {
@@ -47,13 +51,14 @@ let appData = {
             'расх1, расх2, расх3');
         this.addExpenses = addExpenses.toLowerCase().split(',');
         this.deposit = confirm('Есть ли у вас депозит в банке?');
+        this.getInfoDeposit();
         this.getExpensesMonth();
     },
     getTargetMonth: function () {
-        return (appData.mission / this.budgetMonth());
+        return (appData.mission / this.getBudget());
     },
     budgetPeriod: function () {
-        return (this.budget * this.period);
+        return (this.budget * this.period); // TODO: приплюсовать доп доход и процент с депозита
     },
     expensePeriod: function () {
         return (this.expensesMonth * this.period);
@@ -71,7 +76,21 @@ let appData = {
         } else if (this.budgetDay() < 300) {
             return ('Низкий уровень дохода');
         }
+    },
+    getInfoDeposit: function () {
+        if(this.deposit) {
+            do {
+            this.percentDeposit = +prompt('Какой годовой процент на депозите?', 10);
+            } while (isNaN(this.percentDeposit) || this.percentDeposit == '' || this.percentDeposit == null );
+            do {
+            this.moneyDeposit = +prompt('Какая сумма на депозите?', 10000);
+            } while (isNaN(this.moneyDeposit) || this.moneyDeposit == '' || this.moneyDeposit == null );
+        }
+    },
+    calcSavedMoney: function () {
+        return (this.getBudget() * this.period);
     }
+
 };
 
 appData.asking();
