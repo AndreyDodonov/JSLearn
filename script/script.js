@@ -19,7 +19,7 @@ let calcButton = document.getElementById('start'),
     inputAdditionalIncomeItem = document.querySelectorAll('.additional_income-item')[0],
     inputAdditionalIncomeItem2 = document.querySelectorAll('.additional_income-item')[1],
     inputExpensesTitle = document.querySelector('.expenses-title'),
-    inputExpensesAmount = document.querySelector('.expenses-amount'),
+    expensesItems = document.querySelectorAll('.expenses-items'),
     inputAddExpensesAmount = document.querySelector('.additional_expenses-item'),
     inputDepositAmount = document.querySelector('.deposit-amount'),
     inputDepositPercent = document.querySelector('.deposit-percent'),
@@ -79,10 +79,17 @@ let appData = {
         return (this.budget - this.expensesMonth);
     },
     addExpensesBlock: function() {
-        let expensesItem = document.querySelectorAll('.expenses-items');
-        let cloneExpensesItem = expensesItem.cloneNode(true);
-        expensesItem.parentNode.insertBefore(cloneExpensesItem, expensesPlus);
+        let expensesItems = document.querySelectorAll('.expenses-items');
+        let cloneExpensesItem = expensesItems[0].cloneNode(true);
+        expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
+        expensesItems = document.querySelectorAll('.expenses-items');
+        if (expensesItems.length === 3) {
+            expensesPlus.style.display = 'none';
+        }
     },
+
+    
+
     asking: function () {
         if (confirm('Есть ли у вас дополнительный заработок?')) {
             let itemIncome,
