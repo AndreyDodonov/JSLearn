@@ -1,15 +1,18 @@
 'use strict';
 
 /* cancel button */
-let calcButton = document.getElementById('#cancel'),
-/* plus buttons */
-    plusButtonIncome = document.getElementsByTagName('button')[0],
-    plusButtonExpenses = document.getElementsByTagName('button')[1],
-/* checkbox */
+let calcButton = document.getElementById('start'),
+    /* plus buttons */
+    buttonPlus = document.getElementsByTagName('button'),
+    incomePlus = buttonPlus[0],
+    expensesPlus = buttonPlus[1],
+    // plusButtonIncome = document.getElementsByTagName('button')[0],
+    // plusButtonExpenses = document.getElementsByTagName('button')[1],
+    /* checkbox */
     checkBoxDepositCheck = document.querySelector('#deposit-check'),
-/* input additional income */
+    /* input additional income */
     inputAddIncome = document.querySelectorAll('.additional_income-item'),
-/* inputs from left side */
+    /* inputs from left side */
     inputSalaryAmount = document.querySelector('.salary-amount'),
     inputIncomeTitle = document.querySelector('.income-title'),
     inputIncomeAmount = document.querySelector('.income-amount'),
@@ -22,23 +25,14 @@ let calcButton = document.getElementById('#cancel'),
     inputDepositPercent = document.querySelector('.deposit-percent'),
     inputTargetAmount = document.querySelector('.target-amount'),
     inputPeriodSelect = document.querySelector('.period-select'),
-/* Result inputs (right part of screen) */
+    /* Result inputs (right part of screen) */
     inputBudgetMonth = document.querySelector('.budget_month-value'),
-    inputIncome =  document.querySelector('.additional_income-value'),
+    inputIncome = document.querySelector('.additional_income-value'),
     inputExpensesMonth = document.querySelector('.expenses_month-value'),
     inputIncomePeriod = document.querySelector('.income_period-value'),
     inputTargetMonth = document.querySelector('.target_month-value'),
     inputBudgetDay = document.querySelector('.budget_day-value'),
     inputAddExpenses = document.querySelector('.additional_expenses-value');
-
-let money,
-    start = function () {
-        do {
-            money = +prompt('Ваш месячный доход?', 50000);
-        } while (isNaN(money) || money == '' || money == null);
-    };
-
-start();
 
 let appData = {
     income: {},
@@ -50,7 +44,19 @@ let appData = {
     moneyDeposit: 0,
     mission: 50000,
     period: 3,
-    budget: money,
+    budget: 0,
+    start: function () {
+        
+        if (inputSalaryAmount.value === '') {
+            alert('Ошибка! Поле "Месячный доход" обязательно для заполнения');
+            return;
+        }
+        appData.budget = inputSalaryAmount.value;
+        console.log('inputSalaryAmount.value: ', inputSalaryAmount.value);
+        // appData.asking();
+        // appData.budget = appData.getBudget();        
+        // appData.budgetDay();
+    },
     budgetDay: function () {
         return (this.budget / 30);
     },
@@ -71,6 +77,11 @@ let appData = {
     },
     getBudget: function () {
         return (this.budget - this.expensesMonth);
+    },
+    addExpensesBlock: function() {
+        let expensesItem = document.querySelectorAll('.expenses-items');
+        let cloneExpensesItem = expensesItem.cloneNode(true);
+        expensesItem.parentNode.insertBefore(cloneExpensesItem, expensesPlus);
     },
     asking: function () {
         if (confirm('Есть ли у вас дополнительный заработок?')) {
@@ -132,49 +143,59 @@ let appData = {
     }
 };
 
-appData.budget = appData.getBudget();
-appData.asking();
-appData.budgetDay();
+/* event handlers */
+calcButton.addEventListener('click', appData.start);
+expensesPlus.addEventListener('click', appData.addExpensesBlock);
 
-function appDataShow() {
-    for (let key in appData) {
-        console.log('наша программа включает в себя данные: ' + key + ' ' + appData[key]);
-    }
-}
 
-function addIncomeShow() {
-    let output = '';
-    console.log('Возможные доходы: ');
-    for (let key in appData.income) {
-        output += key + ': ' + appData.income[key] + ' ';
-    }
-    console.log(output);
-}
 
-function addsExpensesShow() {
-    let counter = 0;
-    for (let key in appData.expenses) {
-        counter++;
-    }
-    
-    let arr = [];
-    console.log('Возможные расходы: ');
-    for (let key in appData.expenses) {
-        arr.push (key + ': ' + appData.expenses[key]) ;
-    }
-    console.log(arr.join(', ') );
-}
+
+
+
+
+
+
+/* old output - delete later */
+
+// function appDataShow() {
+//     for (let key in appData) {
+//         console.log('наша программа включает в себя данные: ' + key + ' ' + appData[key]);
+//     }
+// }
+
+// function addIncomeShow() {
+//     let output = '';
+//     console.log('Возможные доходы: ');
+//     for (let key in appData.income) {
+//         output += key + ': ' + appData.income[key] + ' ';
+//     }
+//     console.log(output);
+// }
+
+// function addsExpensesShow() {
+//     let counter = 0;
+//     for (let key in appData.expenses) {
+//         counter++;
+//     }
+
+//     let arr = [];
+//     console.log('Возможные расходы: ');
+//     for (let key in appData.expenses) {
+//         arr.push(key + ': ' + appData.expenses[key]);
+//     }
+//     console.log(arr.join(', '));
+// }
 
 /* output */
 
-addsExpensesShow();
-addIncomeShow();
+// addsExpensesShow();
+// addIncomeShow();
 
-console.log('=================================');
-console.log('Расходы за месяц: ' + appData.expensesMonth);
-console.log('Уровень дохода: ', appData.getStatusIncome());
-console.log((appData.getTargetMonth() > 0) ? 'Срок достижения цели: ' + Math.ceil(appData.getTargetMonth()) +
-    ' месяцев' : 'цель не будет достигнута ((');
-console.log('Накопления за период ' + appData.period + ' месяцев: ' + appData.incomePeriod());
-console.log('=================================');
-appDataShow();
+// console.log('=================================');
+// // console.log('Расходы за месяц: ' + appData.expensesMonth);
+// // console.log('Уровень дохода: ', appData.getStatusIncome());
+// console.log((appData.getTargetMonth() > 0) ? 'Срок достижения цели: ' + Math.ceil(appData.getTargetMonth()) +
+//     ' месяцев' : 'цель не будет достигнута ((');
+// console.log('Накопления за период ' + appData.period + ' месяцев: ' + appData.incomePeriod());
+// console.log('=================================');
+// appDataShow();
