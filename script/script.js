@@ -1,5 +1,36 @@
 'use strict';
 
+/* cancel button */
+let calcButton = document.getElementById('#cancel'),
+/* plus buttons */
+    plusButtonIncome = document.getElementsByTagName('button')[0],
+    plusButtonExpenses = document.getElementsByTagName('button')[1],
+/* checkbox */
+    checkBoxDepositCheck = document.querySelector('#deposit-check'),
+/* input additional income */
+    inputAddIncome = document.querySelectorAll('.additional_income-item'),
+/* inputs from left side */
+    inputSalaryAmount = document.querySelector('.salary-amount'),
+    inputIncomeTitle = document.querySelector('.income-title'),
+    inputIncomeAmount = document.querySelector('.income-amount'),
+    inputAdditionalIncomeItem = document.querySelectorAll('.additional_income-item')[0],
+    inputAdditionalIncomeItem2 = document.querySelectorAll('.additional_income-item')[1],
+    inputExpensesTitle = document.querySelector('.expenses-title'),
+    inputExpensesAmount = document.querySelector('.expenses-amount'),
+    inputAddExpensesAmount = document.querySelector('.additional_expenses-item'),
+    inputDepositAmount = document.querySelector('.deposit-amount'),
+    inputDepositPercent = document.querySelector('.deposit-percent'),
+    inputTargetAmount = document.querySelector('.target-amount'),
+    inputPeriodSelect = document.querySelector('.period-select'),
+/* Result inputs (right part of screen) */
+    inputBudgetMonth = document.querySelector('.budget_month-value'),
+    inputIncome =  document.querySelector('.additional_income-value'),
+    inputExpensesMonth = document.querySelector('.expenses_month-value'),
+    inputIncomePeriod = document.querySelector('.income_period-value'),
+    inputTargetMonth = document.querySelector('.target_month-value'),
+    inputBudgetDay = document.querySelector('.budget_day-value'),
+    inputAddExpenses = document.querySelector('.additional_expenses-value');
+
 let money,
     start = function () {
         do {
