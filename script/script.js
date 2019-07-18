@@ -15,9 +15,10 @@ let calcButton = document.getElementById('start'),
     /* inputs from left side */
     inputSalaryAmount = document.querySelector('.salary-amount'),
     inputIncomeTitle = document.querySelector('.income-title'),
-    inputIncomeAmount = document.querySelector('.income-amount'),
-    inputAdditionalIncomeItem = document.querySelectorAll('.additional_income-item')[0],
-    inputAdditionalIncomeItem2 = document.querySelectorAll('.additional_income-item')[1],
+    //inputIncomeAmount = document.querySelector('.income-amount'),
+    addIncomeItems = document.querySelectorAll('.income-items'),
+    //inputAdditionalIncomeItem = document.querySelectorAll('.additional_income-item')[0],
+    //inputAdditionalIncomeItem2 = document.querySelectorAll('.additional_income-item')[1],
     inputExpensesTitle = document.querySelector('.expenses-title'),
     expensesItems = document.querySelectorAll('.expenses-items'),
     inputAddExpensesAmount = document.querySelector('.additional_expenses-item'),
@@ -79,12 +80,20 @@ let appData = {
         return (this.budget - this.expensesMonth);
     },
     addExpensesBlock: function() {
-        let expensesItems = document.querySelectorAll('.expenses-items');
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
         expensesItems = document.querySelectorAll('.expenses-items');
         if (expensesItems.length === 3) {
             expensesPlus.style.display = 'none';
+        }
+    },
+    addIncomeBlock: function() {
+       // let addIncomeItems = document.querySelectorAll('.income-items');
+        let cloneAddIncomeItems = addIncomeItems[0].cloneNode(true);
+        addIncomeItems[0].parentNode.insertBefore(cloneAddIncomeItems, incomePlus);
+        addIncomeItems = document.querySelectorAll('.income-items');
+        if (addIncomeItems.length === 3) {
+            incomePlus.style.display = 'none';
         }
     },
 
@@ -153,6 +162,7 @@ let appData = {
 /* event handlers */
 calcButton.addEventListener('click', appData.start);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
+incomePlus.addEventListener('click', appData.addIncomeBlock);
 
 
 
