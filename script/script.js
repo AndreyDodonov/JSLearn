@@ -29,7 +29,7 @@ let calcButton = document.getElementById('start'),
     inputExpensesMonth = document.querySelector('.expenses_month-value'),
     inputIncomePeriod = document.querySelector('.income_period-value'),
     inputTargetMonth = document.querySelector('.target_month-value'),
-    inputBudgetDay = document.querySelector('.budget_day-value'),
+    DisplaybudgetDay = document.querySelector('.budget_day-value'),
     inputAddExpenses = document.querySelector('.additional_expenses-value');
 
 let appData = {
@@ -43,25 +43,29 @@ let appData = {
     mission: 50000,
     period: 3,
     budget: 0,
+    expensesMonth: 0,
+    overalIncome: +0,
+    monthlySalary: +0,
     start: function () {
 
         if (inputSalaryAmount.value === '') {
             alert('Ошибка! Поле "Месячный доход" обязательно для заполнения');
             return;
         }
-        appData.budget = inputSalaryAmount.value;
+        appData.monthlySalary = +inputSalaryAmount.value;
         appData.getExpenses();
         appData.getIncome();
 
         appData.budget = appData.getBudget();
         appData.budgetDay();
+        DisplaybudgetDay.value = appData.budgetDay();
     },
     budgetDay: function () {
-        return Math.floor(this.budget / 30);
+        return Math.floor(appData.budget / 30);
     },
 
     getBudget: function () {
-        return (this.budget - this.expensesMonth);
+        return ((appData.monthlySalary + appData.overalIncome) - appData.expensesMonth);
     },
     addExpensesBlock: function () {
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
@@ -82,21 +86,21 @@ let appData = {
     getExpenses: function () {
         expensesItems.forEach(function (item) {
             let itemExpenses = item.querySelector('.expenses-title').value;
-            let cashExpenses = item.querySelector('.expenses-amount').value;
+            let cashExpenses = +item.querySelector('.expenses-amount').value;
             if (itemExpenses != '' && cashExpenses != '') {
                 appData.expenses[itemExpenses] = cashExpenses;
-                appData.expensesMonth +=cashExpenses;
+                appData.expensesMonth += cashExpenses;
+                
             }
         });
     },
     getIncome: function () {
         incomeItems.forEach(function (item) {
-            console.log(item);
             let itemIncome = item.querySelector('.income-title').value;
-            let cashIncome = item.querySelector('.income-amount').value;
+            let cashIncome = +item.querySelector('.income-amount').value;
             if (itemIncome != '' && cashIncome != '') {
                 appData.income[itemIncome] = cashIncome;
-                appData.budget += cashIncome;
+                appData.overalIncome += cashIncome;
             }
         });
     },
