@@ -31,6 +31,7 @@ let calcButton = document.getElementById('start'),
     displaybudgetDay = document.querySelector('.budget_day-value'),
     inputAddExpenses = document.querySelector('.additional_expenses-value');
 
+    calcButton.style.display = "none";
 
 let appData = {
     income: {},
@@ -49,10 +50,7 @@ let appData = {
     budgetMonth: +0,
     start: function () {
 
-        if (inputSalaryAmount.value === '') {
-            alert('Ошибка! Поле "Месячный доход" обязательно для заполнения');
-            return;
-        }
+        
         appData.monthlySalary = +inputSalaryAmount.value;
         appData.getExpenses();
         appData.getIncome();
@@ -176,7 +174,14 @@ let appData = {
     }
 };
 
+function showButton () {       // TO DO hide if not a number
+if (inputSalaryAmount.value === '') {
+    calcButton.style.display = 'none';
+ } else {calcButton.style.display = '';}
+}
+
 /* event handlers */
+inputSalaryAmount.addEventListener('input', showButton);
 calcButton.addEventListener('click', appData.start);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
