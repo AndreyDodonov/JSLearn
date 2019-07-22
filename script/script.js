@@ -26,10 +26,11 @@ let calcButton = document.getElementById('start'),
     displayBudgetMonth = document.querySelector('.budget_month-value'),
     inputIncome = document.querySelector('.additional_income-value'),
     displayExpensesMonth = document.querySelector('.expenses_month-value'),
-    inputIncomePeriod = document.querySelector('.income_period-value'),
+    displayIncomePeriod = document.querySelector('.income_period-value'),
     inputTargetMonth = document.querySelector('.target_month-value'),
     displaybudgetDay = document.querySelector('.budget_day-value'),
     inputAddExpenses = document.querySelector('.additional_expenses-value');
+
 
 let appData = {
     income: {},
@@ -58,23 +59,29 @@ let appData = {
         appData.budget = appData.getBudget();
         appData.budgetDay();
         appData.budgetMonth = appData.getBudgetMonth();
-        
-        
+        appData.hideInput();
         appData.showResult();
-        
     },
     showResult: function () {
         displayBudgetMonth.value = appData.budgetMonth;
         displaybudgetDay.value = appData.budgetDay();
         displayExpensesMonth.value = appData.expensesMonth;
+    },
+    hideInput: function () {
+        let buttonReset = calcButton.cloneNode(true);
+        buttonReset.textContent = 'Сбросить';
+        calcButton.parentNode.replaceChild(buttonReset, calcButton);
 
+        let allInput = document.querySelectorAll('input[type=text]');
+        allInput.forEach(function (item) {
+            item.setAttribute('disabled', 'disabled');
+        });
 
     },
-
     getBudgetMonth: function () {
-        return +(appData.overalIncome + appData.monthlySalary);  //TO DO add 'addIncome'
+        return +(appData.overalIncome + appData.monthlySalary); //TO DO add 'addIncome'
     },
-    
+
     budgetDay: function () {
         return Math.floor(appData.budget / 30);
     },
@@ -104,7 +111,7 @@ let appData = {
             if (itemExpenses != '' && cashExpenses != '') {
                 appData.expenses[itemExpenses] = cashExpenses;
                 appData.expensesMonth += cashExpenses;
-            }            
+            }
         });
     },
     getIncome: function () {
@@ -117,7 +124,7 @@ let appData = {
             }
         });
     },
-    getAddExpenses: function() {
+    getAddExpenses: function () {
 
 
 
@@ -128,7 +135,7 @@ let appData = {
         return (appData.mission / (this.budget - this.expensesMonth));
     },
     budgetPeriod: function () {
-        return (this.budget * this.period);
+        return (appData.budget * appData.period);
     },
     expensePeriod: function () {
         return (this.expensesMonth * this.period);
@@ -165,6 +172,7 @@ let appData = {
     changePeriod: function () {
         displayPeriod.innerText = inputPeriodSelect.value;
         appData.period = +inputPeriodSelect.value;
+        displayIncomePeriod.value = appData.budgetPeriod();
     }
 };
 
