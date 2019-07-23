@@ -31,7 +31,8 @@ let calcButton = document.getElementById('start'),
     displaybudgetDay = document.querySelector('.budget_day-value'),
     displayAddExpenses = document.querySelector('.additional_expenses-value');
 
-calcButton.style.display = "none";
+calcButton.style.display = "none";  //view showButton()
+
 
 let appData = {
     income: {},
@@ -39,15 +40,16 @@ let appData = {
     expenses: {},
     addExpenses: [],
     deposit: false,
-    percentDeposit: 0,
-    moneyDeposit: 0,
+    percentDeposit: +0,
+    moneyDeposit: +0,
     mission: +0,
-    period: 3,
-    budget: 0,
+    period: +0,
+    budget: +0,
     expensesMonth: 0,
     overalIncome: +0,
     monthlySalary: +0,
     budgetMonth: +0,
+    deadline: +0,
     start: function () {
         appData.monthlySalary = +inputSalaryAmount.value;
         appData.getExpenses();
@@ -165,7 +167,7 @@ let appData = {
         }
     },
     calcSavedMoney: function () {
-        return (this.budget * this.period);
+        return (appData.budget * appData.period);
     },
     changePeriod: function () {
         displayPeriod.innerText = inputPeriodSelect.value;
@@ -174,7 +176,8 @@ let appData = {
     },
     setMission: function () {
         appData.mission = inputTargetAmount.value;
-
+        //appData.deadline = appData.calcSavedMoney();
+        displayTargetMonth.value = appData.calcSavedMoney();
     }
 };
 
@@ -200,6 +203,7 @@ function showButton() { // TO DO hide if not a number
         calcButton.style.display = '';
     }
 }
+
 
 
 /* event handlers */
