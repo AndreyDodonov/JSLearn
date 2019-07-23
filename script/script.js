@@ -24,14 +24,14 @@ let calcButton = document.getElementById('start'),
     displayPeriod = document.querySelector('.period-amount'),
     /* Result inputsName (right part of screen) */
     displayBudgetMonth = document.querySelector('.budget_month-value'),
-    inputIncome = document.querySelector('.additional_income-value'),
+    displayAddIncome = document.querySelector('.additional_income-value'),
     displayExpensesMonth = document.querySelector('.expenses_month-value'),
     displayIncomePeriod = document.querySelector('.income_period-value'),
-    inputTargetMonth = document.querySelector('.target_month-value'),
+    displayTargetMonth = document.querySelector('.target_month-value'),
     displaybudgetDay = document.querySelector('.budget_day-value'),
-    inputAddExpenses = document.querySelector('.additional_expenses-value');
+    displayAddExpenses = document.querySelector('.additional_expenses-value');
 
-    calcButton.style.display = "none";
+calcButton.style.display = "none";
 
 let appData = {
     income: {},
@@ -41,7 +41,7 @@ let appData = {
     deposit: false,
     percentDeposit: 0,
     moneyDeposit: 0,
-    mission: 50000,
+    mission: +0,
     period: 3,
     budget: 0,
     expensesMonth: 0,
@@ -49,8 +49,6 @@ let appData = {
     monthlySalary: +0,
     budgetMonth: +0,
     start: function () {
-
-        
         appData.monthlySalary = +inputSalaryAmount.value;
         appData.getExpenses();
         appData.getIncome();
@@ -74,12 +72,10 @@ let appData = {
         allInput.forEach(function (item) {
             item.setAttribute('disabled', 'disabled');
         });
-
     },
     getBudgetMonth: function () {
         return +(appData.overalIncome + appData.monthlySalary); //TO DO add 'addIncome'
     },
-
     budgetDay: function () {
         return Math.floor(appData.budget / 30);
     },
@@ -88,8 +84,8 @@ let appData = {
     },
     addExpensesBlock: function () {
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
-        cloneExpensesItem.querySelector('.expenses-title').value ='';
-        cloneExpensesItem.querySelector('.expenses-amount').value ='';
+        cloneExpensesItem.querySelector('.expenses-title').value = '';
+        cloneExpensesItem.querySelector('.expenses-amount').value = '';
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
         expensesItems = document.querySelectorAll('.expenses-items');
         if (expensesItems.length === 3) {
@@ -175,29 +171,36 @@ let appData = {
         displayPeriod.innerText = inputPeriodSelect.value;
         appData.period = +inputPeriodSelect.value;
         displayIncomePeriod.value = appData.budgetPeriod();
+    },
+    setMission: function () {
+        appData.mission = inputTargetAmount.value;
+
     }
 };
 
 /* input restrictions */
-let inputsName = document.querySelectorAll('[placeholder="Наименование"]'); 
-inputsName.forEach (function (item) {
-    item.addEventListener('input',() => {
-        item.value = item.value.replace(/[^а-яА-Я,.!?\-;:]/g,'');
+let inputsName = document.querySelectorAll('[placeholder="Наименование"]');
+inputsName.forEach(function (item) {
+    item.addEventListener('input', () => {
+        item.value = item.value.replace(/[^а-яА-Я,.!?\-;:]/g, '');
     });
 });
 let inputsSum = document.querySelectorAll('[placeholder="Сумма"]');
-inputsSum.forEach (function (item) {
-    item.addEventListener('input',() => {
-        item.value = item.value.replace(/[^0-9]/g,'');
+inputsSum.forEach(function (item) {
+    item.addEventListener('input', () => {
+        item.value = item.value.replace(/[^0-9]/g, '');
     });
 });
 
 /* other functions */
-function showButton () {       // TO DO hide if not a number
-if (inputSalaryAmount.value === '') {
-    calcButton.style.display = 'none';
- } else {calcButton.style.display = '';}
+function showButton() { // TO DO hide if not a number
+    if (inputSalaryAmount.value === '') {
+        calcButton.style.display = 'none';
+    } else {
+        calcButton.style.display = '';
+    }
 }
+
 
 /* event handlers */
 inputSalaryAmount.addEventListener('input', showButton);
@@ -205,3 +208,4 @@ calcButton.addEventListener('click', appData.start);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
 inputPeriodSelect.addEventListener('input', appData.changePeriod);
+inputTargetAmount.addEventListener('input', appData.setMission);
