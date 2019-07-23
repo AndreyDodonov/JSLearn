@@ -10,7 +10,7 @@ let calcButton = document.getElementById('start'),
     checkBoxDepositCheck = document.querySelector('#deposit-check'),
     /* input additional income */
     inputAddIncome = document.querySelectorAll('.additional_income-item'),
-    /* inputs from left side */
+    /* inputsName from left side */
     inputSalaryAmount = document.querySelector('.salary-amount'),
     inputIncomeTitle = document.querySelector('.income-title'),
     incomeItems = document.querySelectorAll('.income-items'),
@@ -22,7 +22,7 @@ let calcButton = document.getElementById('start'),
     inputTargetAmount = document.querySelector('.target-amount'),
     inputPeriodSelect = document.querySelector('.period-select'),
     displayPeriod = document.querySelector('.period-amount'),
-    /* Result inputs (right part of screen) */
+    /* Result inputsName (right part of screen) */
     displayBudgetMonth = document.querySelector('.budget_month-value'),
     inputIncome = document.querySelector('.additional_income-value'),
     displayExpensesMonth = document.querySelector('.expenses_month-value'),
@@ -178,6 +178,21 @@ let appData = {
     }
 };
 
+/* input restrictions */
+let inputsName = document.querySelectorAll('[placeholder="Наименование"]'); 
+inputsName.forEach (function (item) {
+    item.addEventListener('input',() => {
+        item.value = item.value.replace(/[^а-яА-Я,.!?\-;:]/g,'');
+    });
+});
+let inputsSum = document.querySelectorAll('[placeholder="Сумма"]');
+inputsSum.forEach (function (item) {
+    item.addEventListener('input',() => {
+        item.value = item.value.replace(/[^0-9]/g,'');
+    });
+});
+
+/* other functions */
 function showButton () {       // TO DO hide if not a number
 if (inputSalaryAmount.value === '') {
     calcButton.style.display = 'none';
