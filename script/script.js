@@ -31,7 +31,7 @@ let calcButton = document.getElementById('start'),
     displaybudgetDay = document.querySelector('.budget_day-value'),
     displayAddExpenses = document.querySelector('.additional_expenses-value');
 
-calcButton.style.display = "none";  //view showButton()
+calcButton.style.display = "none"; //view showButton()
 
 
 let appData = {
@@ -51,19 +51,19 @@ let appData = {
     budgetMonth: +0,
     deadline: +0,
     start: function () {
-        appData.monthlySalary = +inputSalaryAmount.value;
+        this.monthlySalary = +inputSalaryAmount.value;
         appData.getExpenses();
-        appData.getIncome();
-        appData.budget = appData.getBudget();
-        appData.budgetDay();
-        appData.budgetMonth = appData.getBudgetMonth();
-        appData.hideInput();
-        appData.showResult();
+        this.getIncome();
+        this.budget = this.getBudget();
+        this.budgetDay();
+        this.budgetMonth = this.getBudgetMonth();
+        this.hideInput();
+        this.showResult();
     },
     showResult: function () {
-        displayBudgetMonth.value = appData.budgetMonth;
-        displaybudgetDay.value = appData.budgetDay();
-        displayExpensesMonth.value = appData.expensesMonth;
+        displayBudgetMonth.value = this.budgetMonth;
+        displaybudgetDay.value = this.budgetDay();
+        displayExpensesMonth.value = this.expensesMonth;
     },
     hideInput: function () {
         let buttonReset = calcButton.cloneNode(true);
@@ -76,13 +76,13 @@ let appData = {
         });
     },
     getBudgetMonth: function () {
-        return +(appData.overalIncome + appData.monthlySalary); //TO DO add 'addIncome'
+        return +(this.overalIncome + this.monthlySalary); //TO DO add 'addIncome'
     },
     budgetDay: function () {
-        return Math.floor(appData.budget / 30);
+        return Math.floor(this.budget / 30);
     },
     getBudget: function () {
-        return ((appData.monthlySalary + appData.overalIncome) - appData.expensesMonth);
+        return ((this.monthlySalary + this.overalIncome) - this.expensesMonth);
     },
     addExpensesBlock: function () {
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
@@ -132,10 +132,10 @@ let appData = {
 
     },
     getTargetMonth: function () {
-        return (appData.mission / (this.budget - this.expensesMonth));
+        return (this.mission / (this.budget - this.expensesMonth));
     },
     budgetPeriod: function () {
-        return (appData.budget * appData.period);
+        return (this.budget * this.period);
     },
     expensePeriod: function () {
         return (this.expensesMonth * this.period);
@@ -154,30 +154,29 @@ let appData = {
             return ('Низкий уровень дохода');
         }
     },
-    getInfoDeposit: function () {
-        if (this.deposit) {
-            do {
-                this.percentDeposit = +prompt('Какой годовой процент на депозите?', 10);
-            } while (isNaN(this.percentDeposit) || this.percentDeposit == '' || this.percentDeposit == null);
-            do {
-                this.moneyDeposit = +prompt('Какая сумма на депозите?', 10000);
-            } while (isNaN(this.moneyDeposit) || this.moneyDeposit == '' || this.moneyDeposit == null);
-            this.budget += ((this.moneyDeposit / (this.percentDeposit / 12)) * this.period);
-            // (сумма /(процент в месяц) * период накопления)
-        }
-    },
+    // getInfoDeposit: function () {
+    //     if (this.deposit) {
+    //         do {
+    //             this.percentDeposit = +prompt('Какой годовой процент на депозите?', 10);
+    //         } while (isNaN(this.percentDeposit) || this.percentDeposit == '' || this.percentDeposit == null);
+    //         do {
+    //             this.moneyDeposit = +prompt('Какая сумма на депозите?', 10000);
+    //         } while (isNaN(this.moneyDeposit) || this.moneyDeposit == '' || this.moneyDeposit == null);
+    //         this.budget += ((this.moneyDeposit / (this.percentDeposit / 12)) * this.period);
+    //         // (сумма /(процент в месяц) * период накопления)
+    //     }
+    // },
     calcSavedMoney: function () {
-        return (appData.budget * appData.period);
+        return (this.budget * this.period);
     },
     changePeriod: function () {
         displayPeriod.innerText = inputPeriodSelect.value;
-        appData.period = +inputPeriodSelect.value;
-        displayIncomePeriod.value = appData.budgetPeriod();
+        this.period = +inputPeriodSelect.value;
+        displayIncomePeriod.value = this.budgetPeriod();
     },
     setMission: function () {
-        appData.mission = inputTargetAmount.value;
-        //appData.deadline = appData.calcSavedMoney();
-        displayTargetMonth.value = appData.calcSavedMoney();
+        this.mission = inputTargetAmount.value;
+        displayTargetMonth.value = this.calcSavedMoney();
     }
 };
 
@@ -208,7 +207,7 @@ function showButton() { // TO DO hide if not a number
 
 /* event handlers */
 inputSalaryAmount.addEventListener('input', showButton);
-calcButton.addEventListener('click', appData.start);
+calcButton.addEventListener('click', appData.start.bind(appData));
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
 inputPeriodSelect.addEventListener('input', appData.changePeriod);
