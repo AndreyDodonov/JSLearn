@@ -4,11 +4,14 @@
 
 I study JavaScript on [glo-academy](https://glo-academy.ru/jscript/)
 
-lesson 9.
+lesson 10.
 
-####Call context. this.
+#### OOP.
+##### Inheritance, prototypes, constructors, and classes
+ 
+
 
 related links:
- - [Как работает this()](https://medium.com/@stasonmars/подробно-о-том-как-работает-this-в-javascript-a13b4b6ec9ac)
- - [Bind, Call и Apply](https://habr.com/ru/post/199456/)
+ - [ООП в прототипном стиле](https://learn.javascript.ru/prototypes)
+ - [getComputedStyle, cssText](https://learn.javascript.ru/styles-and-classes#stroka-stiley-style-csstext)
 

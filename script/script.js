@@ -62,8 +62,10 @@ let appData = {
         this.showResult(); //calculate and show result  
 
         let buttonReset = calcButton.cloneNode(true);
+        
         buttonReset.id = 'reset';
         buttonReset.textContent = 'Сбросить';
+               
         calcButton.parentNode.replaceChild(buttonReset, calcButton);
 
         let allInput = document.querySelectorAll('input[type=text]');
@@ -108,20 +110,9 @@ let appData = {
         displayExpensesMonth.value = this.expensesMonth; //расходы замесяц
         displayIncomePeriod.value = this.budgetPeriod(); //накопления за период
         displayTargetMonth.value = Math.ceil(this.setMission()); //срок достижения цели
-        displayAddExpenses.value = this.addExpenses.join(', ');
-        displayAddIncome.value = this.addIncome.join(', ');
+        displayAddExpenses.value = this.addExpenses.join(', '); //дополнительные расходы
+        displayAddIncome.value = this.addIncome.join(', '); //дополнительные доходы
     },
-    // hideInput: function () {
-    //     let buttonReset = calcButton.cloneNode(true);
-    //     buttonReset.id = 'reset';
-    //     buttonReset.textContent = 'Сбросить';
-    //     calcButton.parentNode.replaceChild(buttonReset, calcButton);
-
-    //     let allInput = document.querySelectorAll('input[type=text]');
-    //     allInput.forEach(function (item) {
-    //         item.setAttribute('disabled', 'disabled');
-    //     });
-    // },
     getBudgetMonth: function () {
         return +(this.overalIncome + this.monthlySalary); //TO DO add 'addIncome'
     },
@@ -225,7 +216,6 @@ let appData = {
     },
     changePeriod: function () {
         displayPeriod.innerText = inputPeriodSelect.value;
-        //this.period = +inputPeriodSelect.value;
         displayIncomePeriod.value = this.budgetPeriod();
     },
     setMission: function () {
