@@ -59,6 +59,7 @@ let appData = {
         this.hideInput();
         this.setMission();
         this.getAddExpenses();
+        this.getAddIncome();
 
         this.showResult();        
     },
@@ -138,6 +139,14 @@ let appData = {
             item = item.trim();
             if (item!==''){
                 this.addExpenses.push(item);
+            }
+        });
+    },
+    getAddIncome: function(){
+        inputAddIncome.forEach((item)=>{
+            let itemValue = item.value.trim();
+            if(item.value!==''){
+                this.addIncome.push(itemValue);
             }
         });
     },
