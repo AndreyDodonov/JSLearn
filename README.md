@@ -4,15 +4,11 @@
 
 I study JavaScript on [glo-academy](https://glo-academy.ru/jscript/)
 
-lesson 8.
+lesson 9.
 
-#####Event handlers.
+####Call context. this.
 
 related links:
- - [EventTarget.addEventListener()](https://developer.mozilla.org/ru/docs/Web/API/EventTarget/addEventListener)
- - [Браузерные события](https://learn.javascript.ru/introduction-browser-events)
- - [События изменение](https://learn.javascript.ru/events-change)
- - [Делегирование Событий](https://www.cat-in-web.ru/delegirovanie-sobytij-v-javascript/)
- - [Всплытие - Перехват](https://learn.javascript.ru/event-bubbling)
- - [Events bubbling и events capturing](https://habr.com/ru/post/126471/)
- - [Создание и вызов событий](https://developer.mozilla.org/ru/docs/Web/Guide/Events/Создание_и_вызов_событий)
+ - [Как работает this()](https://medium.com/@stasonmars/подробно-о-том-как-работает-this-в-javascript-a13b4b6ec9ac)
+ - [Bind, Call и Apply](https://habr.com/ru/post/199456/)
+
