@@ -32,6 +32,7 @@ let calcButton = document.getElementById('start'),
     displayAddExpenses = document.querySelector('.additional_expenses-value');
 
 calcButton.style.display = "none"; //view showButton()
+showButton();
 
 
 let appData = {
@@ -55,53 +56,11 @@ let appData = {
         this.budget = this.getBudget();
         this.budgetDay();
         this.budgetMonth = this.getBudgetMonth();
-        this.hideInput();
         this.setMission();
         this.getAddExpenses();
         this.getAddIncome();
-        this.showResult();     //calculate and show result  
-        
-        let reset = document.querySelector('#reset');
-        reset.addEventListener('click', appData.reset.bind(appData));
+        this.showResult(); //calculate and show result  
 
-    },
-    reset : function(){
-        this.income = {};
-        this.addIncome = [];
-        this.expenses = {};
-        this.addExpenses = [];
-        this.expensesMonth = 0;
-        this.budget = 0;
-        this.budgetMonth = 0;
-        let resetButton = document.querySelector('#reset');
-        document.querySelectorAll('input').forEach((item) => item.value= '');
-        let allInput = document.querySelectorAll('input[type=text] ');
-        allInput.forEach(function(item){
-        item.removeAttribute('disabled');
-        });
-        for (let i=1; i<expensesItems.length;i++){
-            expensesItems[i].parentNode.removeChild(expensesItems[i]);
-        }
-        expensesPlus.style.display ='block';
-        for (let i=1; i<incomeItems.length;i++){
-            incomeItems[i].parentNode.removeChild(incomeItems[i]);
-        }
-        incomePlus.style.display ='block';
-        inputPeriodSelect.value = 1;
-        checkBoxDepositCheck.checked = false;
-        displayPeriod.textContent= 1;
-        resetButton.parentNode.replaceChild(calcButton, resetButton);
-    },
-    showResult: function () {
-        displayBudgetMonth.value = this.budgetMonth;  //доходы за месяц
-        displaybudgetDay.value = this.budgetDay();    //бюджет на день
-        displayExpensesMonth.value = this.expensesMonth; //расходы замесяц
-        displayIncomePeriod.value = this.budgetPeriod(); //накопления за период
-        displayTargetMonth.value = Math.ceil(this.setMission()); //срок достижения цели
-        displayAddExpenses.value = this.addExpenses.join(', ');
-        displayAddIncome.value = this.addIncome.join(', ');
-    },
-    hideInput: function () {
         let buttonReset = calcButton.cloneNode(true);
         buttonReset.id = 'reset';
         buttonReset.textContent = 'Сбросить';
@@ -111,7 +70,58 @@ let appData = {
         allInput.forEach(function (item) {
             item.setAttribute('disabled', 'disabled');
         });
+        let reset = document.querySelector('#reset');
+        reset.addEventListener('click', appData.reset.bind(appData));
+
     },
+    reset: function () {
+        this.income = {};
+        this.addIncome = [];
+        this.expenses = {};
+        this.addExpenses = [];
+        this.expensesMonth = 0;
+        this.budget = 0;
+        this.budgetMonth = 0;
+
+        let resetButton = document.querySelector('#reset');
+        document.querySelectorAll('input').forEach((item) => item.value = '');
+        let allInput = document.querySelectorAll('input[type=text] ');
+        allInput.forEach(function (item) {
+            item.removeAttribute('disabled');
+        });
+        for (let i = 1; i < expensesItems.length; i++) {
+            expensesItems[i].parentNode.removeChild(expensesItems[i]);
+        }
+        expensesPlus.style.display = 'block';
+        for (let i = 1; i < incomeItems.length; i++) {
+            incomeItems[i].parentNode.removeChild(incomeItems[i]);
+        }
+        incomePlus.style.display = 'block';
+        inputPeriodSelect.value = 1;
+        checkBoxDepositCheck.checked = false;
+        displayPeriod.textContent = 1;
+        resetButton.parentNode.replaceChild(calcButton, resetButton);
+    },
+    showResult: function () {
+        displayBudgetMonth.value = this.budgetMonth; //доходы за месяц
+        displaybudgetDay.value = this.budgetDay(); //бюджет на день
+        displayExpensesMonth.value = this.expensesMonth; //расходы замесяц
+        displayIncomePeriod.value = this.budgetPeriod(); //накопления за период
+        displayTargetMonth.value = Math.ceil(this.setMission()); //срок достижения цели
+        displayAddExpenses.value = this.addExpenses.join(', ');
+        displayAddIncome.value = this.addIncome.join(', ');
+    },
+    // hideInput: function () {
+    //     let buttonReset = calcButton.cloneNode(true);
+    //     buttonReset.id = 'reset';
+    //     buttonReset.textContent = 'Сбросить';
+    //     calcButton.parentNode.replaceChild(buttonReset, calcButton);
+
+    //     let allInput = document.querySelectorAll('input[type=text]');
+    //     allInput.forEach(function (item) {
+    //         item.setAttribute('disabled', 'disabled');
+    //     });
+    // },
     getBudgetMonth: function () {
         return +(this.overalIncome + this.monthlySalary); //TO DO add 'addIncome'
     },
@@ -161,19 +171,19 @@ let appData = {
             }
         });
     },
-    getAddExpenses: function(){
+    getAddExpenses: function () {
         let addExpenses = inputAddExpensesAmount.value.split(',');
-        addExpenses.forEach( (item)=>{
+        addExpenses.forEach((item) => {
             item = item.trim();
-            if (item!==''){
+            if (item !== '') {
                 this.addExpenses.push(item);
             }
         });
     },
-    getAddIncome: function(){
-        inputAddIncome.forEach((item)=>{
+    getAddIncome: function () {
+        inputAddIncome.forEach((item) => {
             let itemValue = item.value.trim();
-            if(item.value!==''){
+            if (item.value !== '') {
                 this.addIncome.push(itemValue);
             }
         });
@@ -219,8 +229,8 @@ let appData = {
         displayIncomePeriod.value = this.budgetPeriod();
     },
     setMission: function () {
-        this.mission = inputTargetAmount.value; 
-      return (this.mission / this.budget);        
+        this.mission = inputTargetAmount.value;
+        return (this.mission / this.budget);
     }
 };
 
