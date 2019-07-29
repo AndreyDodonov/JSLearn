@@ -43,7 +43,6 @@ let appData = {
     percentDeposit: +0,
     moneyDeposit: +0,
     mission: +0,
-    //period: +0,
     budget: +0,
     expensesMonth: 0,
     overalIncome: +0,
@@ -60,8 +59,38 @@ let appData = {
         this.setMission();
         this.getAddExpenses();
         this.getAddIncome();
+        this.showResult();     //calculate and show result  
+        
+        let reset = document.querySelector('#reset');
+        reset.addEventListener('click', appData.reset.bind(appData));
 
-        this.showResult();        
+    },
+    reset : function(){
+        this.income = {};
+        this.addIncome = [];
+        this.expenses = {};
+        this.addExpenses = [];
+        this.expensesMonth = 0;
+        this.budget = 0;
+        this.budgetMonth = 0;
+        let resetButton = document.querySelector('#reset');
+        document.querySelectorAll('input').forEach((item) => item.value= '');
+        let allInput = document.querySelectorAll('input[type=text] ');
+        allInput.forEach(function(item){
+        item.removeAttribute('disabled');
+        });
+        for (let i=1; i<expensesItems.length;i++){
+            expensesItems[i].parentNode.removeChild(expensesItems[i]);
+        }
+        expensesPlus.style.display ='block';
+        for (let i=1; i<incomeItems.length;i++){
+            incomeItems[i].parentNode.removeChild(incomeItems[i]);
+        }
+        incomePlus.style.display ='block';
+        inputPeriodSelect.value = 1;
+        checkBoxDepositCheck.checked = false;
+        displayPeriod.textContent= 1;
+        resetButton.parentNode.replaceChild(calcButton, resetButton);
     },
     showResult: function () {
         displayBudgetMonth.value = this.budgetMonth;  //доходы за месяц
@@ -71,11 +100,10 @@ let appData = {
         displayTargetMonth.value = Math.ceil(this.setMission()); //срок достижения цели
         displayAddExpenses.value = this.addExpenses.join(', ');
         displayAddIncome.value = this.addIncome.join(', ');
-        
-
     },
     hideInput: function () {
         let buttonReset = calcButton.cloneNode(true);
+        buttonReset.id = 'reset';
         buttonReset.textContent = 'Сбросить';
         calcButton.parentNode.replaceChild(buttonReset, calcButton);
 
