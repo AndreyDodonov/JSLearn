@@ -43,13 +43,12 @@ let appData = {
     percentDeposit: +0,
     moneyDeposit: +0,
     mission: +0,
-    period: +0,
+    //period: +0,
     budget: +0,
     expensesMonth: 0,
     overalIncome: +0,
     monthlySalary: +0,
     budgetMonth: +0,
-    deadline: +0,
     start: function () {
         this.monthlySalary = +inputSalaryAmount.value;
         appData.getExpenses();
@@ -58,12 +57,21 @@ let appData = {
         this.budgetDay();
         this.budgetMonth = this.getBudgetMonth();
         this.hideInput();
-        this.showResult();
+        this.setMission();
+        this.getAddExpenses();
+
+        this.showResult();        
     },
     showResult: function () {
-        displayBudgetMonth.value = this.budgetMonth;
-        displaybudgetDay.value = this.budgetDay();
-        displayExpensesMonth.value = this.expensesMonth;
+        displayBudgetMonth.value = this.budgetMonth;  //доходы за месяц
+        displaybudgetDay.value = this.budgetDay();    //бюджет на день
+        displayExpensesMonth.value = this.expensesMonth; //расходы замесяц
+        displayIncomePeriod.value = this.budgetPeriod(); //накопления за период
+        displayTargetMonth.value = Math.ceil(this.setMission()); //срок достижения цели
+        displayAddExpenses.value = this.addExpenses.join(', ');
+        displayAddIncome.value = this.addIncome.join(', ');
+        
+
     },
     hideInput: function () {
         let buttonReset = calcButton.cloneNode(true);
@@ -124,21 +132,20 @@ let appData = {
             }
         });
     },
-    getAddExpenses: function () {
-
-
-
-
-
-    },
-    getTargetMonth: function () {
-        return (this.mission / (this.budget - this.expensesMonth));
+    getAddExpenses: function(){
+        let addExpenses = inputAddExpensesAmount.value.split(',');
+        addExpenses.forEach( (item)=>{
+            item = item.trim();
+            if (item!==''){
+                this.addExpenses.push(item);
+            }
+        });
     },
     budgetPeriod: function () {
-        return (this.budget * this.period);
+        return (this.budget * inputPeriodSelect.value);
     },
     expensePeriod: function () {
-        return (this.expensesMonth * this.period);
+        return (this.expensesMonth * inputPeriodSelect.value);
     },
     incomePeriod: function () {
         return (this.budgetPeriod() - this.expensePeriod());
@@ -167,16 +174,16 @@ let appData = {
     //     }
     // },
     calcSavedMoney: function () {
-        return (this.budget * this.period);
+        return (this.budget * inputPeriodSelect.value);
     },
     changePeriod: function () {
         displayPeriod.innerText = inputPeriodSelect.value;
-        this.period = +inputPeriodSelect.value;
+        //this.period = +inputPeriodSelect.value;
         displayIncomePeriod.value = this.budgetPeriod();
     },
     setMission: function () {
-        this.mission = inputTargetAmount.value;
-        displayTargetMonth.value = this.calcSavedMoney();
+        this.mission = inputTargetAmount.value; 
+      return (this.mission / this.budget);        
     }
 };
 
@@ -203,12 +210,10 @@ function showButton() { // TO DO hide if not a number
     }
 }
 
-
-
 /* event handlers */
 inputSalaryAmount.addEventListener('input', showButton);
 calcButton.addEventListener('click', appData.start.bind(appData));
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
-inputPeriodSelect.addEventListener('input', appData.changePeriod);
+inputPeriodSelect.addEventListener('input', appData.changePeriod.bind(appData));
 inputTargetAmount.addEventListener('input', appData.setMission);
