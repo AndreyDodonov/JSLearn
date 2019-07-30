@@ -4,11 +4,15 @@
 
 I study JavaScript on [glo-academy](https://glo-academy.ru/jscript/)
 
-lesson 9.
+lesson 11.
 
-####Call context. this.
+#### New syntax.
+
+##### Features of the modern standard ES6
+
+##### Interpolation. Destructuring
 
 related links:
- - [Как работает this()](https://medium.com/@stasonmars/подробно-о-том-как-работает-this-в-javascript-a13b4b6ec9ac)
- - [Bind, Call и Apply](https://habr.com/ru/post/199456/)
+ - [ES6: Операторы Spread и Rest](http://jsraccoon.ru/es6-spread-rest)
+ - [EcmaScript 10](https://habr.com/ru/post/437806/)
 
