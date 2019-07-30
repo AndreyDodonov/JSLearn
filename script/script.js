@@ -111,17 +111,6 @@ let appData = {
         displayAddExpenses.value = this.addExpenses.join(', ');
         displayAddIncome.value = this.addIncome.join(', ');
     },
-    // hideInput: function () {
-    //     let buttonReset = calcButton.cloneNode(true);
-    //     buttonReset.id = 'reset';
-    //     buttonReset.textContent = 'Сбросить';
-    //     calcButton.parentNode.replaceChild(buttonReset, calcButton);
-
-    //     let allInput = document.querySelectorAll('input[type=text]');
-    //     allInput.forEach(function (item) {
-    //         item.setAttribute('disabled', 'disabled');
-    //     });
-    // },
     getBudgetMonth: function () {
         return +(this.overalIncome + this.monthlySalary); //TO DO add 'addIncome'
     },

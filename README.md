@@ -15,4 +15,3 @@ lesson 11.
 related links:
  - [ES6: Операторы Spread и Rest](http://jsraccoon.ru/es6-spread-rest)
  - [EcmaScript 10](https://habr.com/ru/post/437806/)
-
