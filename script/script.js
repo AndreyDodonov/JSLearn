@@ -1,23 +1,23 @@
 'use strict';
 
 /* cancel button */
-let calcButton = document.getElementById('start'),
+const calcButton = document.getElementById('start'),
     /* plus buttons */
-    buttonPlus = document.getElementsByTagName('button'),
-    incomePlus = buttonPlus[0],
-    expensesPlus = buttonPlus[1],
-    /* checkbox */
-    checkBoxDepositCheck = document.querySelector('#deposit-check'),
-    /* input additional income */
-    inputAddIncome = document.querySelectorAll('.additional_income-item'),
-    /* inputsName from left side */
-    inputSalaryAmount = document.querySelector('.salary-amount'),
-    inputIncomeTitle = document.querySelector('.income-title'),
+    buttonPlus = document.getElementsByTagName('button');
+let incomePlus = buttonPlus[0],
+    expensesPlus = buttonPlus[1];
+/* checkbox */
+const checkBoxDepositCheck = document.querySelector('#deposit-check');
+/* input additional income */
+let inputAddIncome = document.querySelectorAll('.additional_income-item');
+/* inputsName from left side */
+const inputSalaryAmount = document.querySelector('.salary-amount');
+let inputIncomeTitle = document.querySelector('.income-title'),
     incomeItems = document.querySelectorAll('.income-items'),
     inputExpensesTitle = document.querySelector('.expenses-title'),
     expensesItems = document.querySelectorAll('.expenses-items'),
-    inputAddExpensesAmount = document.querySelector('.additional_expenses-item'),
-    inputDepositAmount = document.querySelector('.deposit-amount'),
+    inputAddExpensesAmount = document.querySelector('.additional_expenses-item');
+const inputDepositAmount = document.querySelector('.deposit-amount'),
     inputDepositPercent = document.querySelector('.deposit-percent'),
     inputTargetAmount = document.querySelector('.target-amount'),
     inputPeriodSelect = document.querySelector('.period-select'),
@@ -34,7 +34,6 @@ let calcButton = document.getElementById('start'),
     depositBank = document.querySelector('.deposit-bank'),
     depositAmount = document.querySelector('.deposit-amount'),
     depositPercent = document.querySelector('.deposit-percent');
-
 
 calcButton.style.display = "none"; //view showButton()
 showButton();
@@ -58,7 +57,7 @@ let appData = {
         this.monthlySalary = +inputSalaryAmount.value;
         appData.getExpenses();
         this.getIncome();
-        this.getInfoDeposit();        
+        this.getInfoDeposit();
         this.setMission();
         this.getAddExpenses();
         this.getAddIncome();
@@ -118,7 +117,7 @@ let appData = {
         displayAddIncome.value = this.addIncome.join(', ');
     },
     getBudgetMonth: function () {
-        return +(this.overalIncome + this.monthlySalary + (this.moneyDeposit * (this.percentDeposit / 12))); //TO DO add 'addIncome'
+        return +(this.overalIncome + this.monthlySalary + (this.moneyDeposit * (this.percentDeposit / 12)));
     },
     budgetDay: function () {
         return Math.floor(this.budget / 30);
@@ -265,15 +264,15 @@ checkBoxDepositCheck.addEventListener('change', function () {
         depositBank.addEventListener('change', function () {
             let selectIndex = this.options[this.selectedIndex].value;
             console.log(this.options[this.selectedIndex].value);
-            if(selectIndex === 'other'){
+            if (selectIndex === 'other') {
                 depositPercent.style.display = 'inline-block';
                 depositPercent.removeAttribute('disabled');
                 depositPercent.value = '';
-                } else {
-                        depositPercent.style.display ='none';
-                        depositPercent.value = selectIndex;
-                       }
-                
+            } else {
+                depositPercent.style.display = 'none';
+                depositPercent.value = selectIndex;
+            }
+
         });
     } else {
         depositBank.style.display = 'none';
