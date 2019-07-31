@@ -29,7 +29,12 @@ let calcButton = document.getElementById('start'),
     displayIncomePeriod = document.querySelector('.income_period-value'),
     displayTargetMonth = document.querySelector('.target_month-value'),
     displaybudgetDay = document.querySelector('.budget_day-value'),
-    displayAddExpenses = document.querySelector('.additional_expenses-value');
+    displayAddExpenses = document.querySelector('.additional_expenses-value'),
+    /* Deposit  */
+    depositBank = document.querySelector('.deposit-bank'),
+    depositAmount = document.querySelector('.deposit-amount'),
+    depositPercent = document.querySelector('.deposit-percent');
+
 
 calcButton.style.display = "none"; //view showButton()
 showButton();
@@ -53,12 +58,13 @@ let appData = {
         this.monthlySalary = +inputSalaryAmount.value;
         appData.getExpenses();
         this.getIncome();
-        this.budget = this.getBudget();
-        this.budgetDay();
-        this.budgetMonth = this.getBudgetMonth();
+        this.getInfoDeposit();        
         this.setMission();
         this.getAddExpenses();
         this.getAddIncome();
+        this.budget = this.getBudget();
+        this.budgetDay();
+        this.budgetMonth = this.getBudgetMonth();
         this.showResult(); //calculate and show result  
 
         let buttonReset = calcButton.cloneNode(true);
@@ -112,13 +118,14 @@ let appData = {
         displayAddIncome.value = this.addIncome.join(', ');
     },
     getBudgetMonth: function () {
-        return +(this.overalIncome + this.monthlySalary); //TO DO add 'addIncome'
+        return +(this.overalIncome + this.monthlySalary + (this.moneyDeposit * (this.percentDeposit / 12))); //TO DO add 'addIncome'
     },
     budgetDay: function () {
         return Math.floor(this.budget / 30);
     },
     getBudget: function () {
-        return ((this.monthlySalary + this.overalIncome) - this.expensesMonth);
+        return ((this.monthlySalary + this.overalIncome + (
+            (this.moneyDeposit * (this.percentDeposit / 12))) - this.expensesMonth));
     },
     addExpensesBlock: function () {
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
@@ -197,18 +204,14 @@ let appData = {
             return ('Низкий уровень дохода');
         }
     },
-    // getInfoDeposit: function () {
-    //     if (this.deposit) {
-    //         do {
-    //             this.percentDeposit = +prompt('Какой годовой процент на депозите?', 10);
-    //         } while (isNaN(this.percentDeposit) || this.percentDeposit == '' || this.percentDeposit == null);
-    //         do {
-    //             this.moneyDeposit = +prompt('Какая сумма на депозите?', 10000);
-    //         } while (isNaN(this.moneyDeposit) || this.moneyDeposit == '' || this.moneyDeposit == null);
-    //         this.budget += ((this.moneyDeposit / (this.percentDeposit / 12)) * this.period);
-    //         // (сумма /(процент в месяц) * период накопления)
-    //     }
-    // },
+    getInfoDeposit: function () {
+        if (this.deposit) {
+            this.percentDeposit = depositPercent.value;
+            this.moneyDeposit = depositAmount.value;
+            //this.budget += ((this.moneyDeposit / (this.percentDeposit / 12)) * this.period);
+            // (сумма /(процент в месяц) * период накопления)
+        }
+    },
     calcSavedMoney: function () {
         return (this.budget * inputPeriodSelect.value);
     },
@@ -247,9 +250,37 @@ function showButton() { // TO DO hide if not a number
 }
 
 /* event handlers */
+
 inputSalaryAmount.addEventListener('input', showButton);
 calcButton.addEventListener('click', appData.start.bind(appData));
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
 inputPeriodSelect.addEventListener('input', appData.changePeriod.bind(appData));
 inputTargetAmount.addEventListener('input', appData.setMission);
+checkBoxDepositCheck.addEventListener('change', function () {
+    if (checkBoxDepositCheck.checked) {
+        depositBank.style.display = 'inline-block';
+        depositAmount.style.display = 'inline-block';
+        appData.deposit = true;
+        depositBank.addEventListener('change', function () {
+            let selectIndex = this.options[this.selectedIndex].value;
+            console.log(this.options[this.selectedIndex].value);
+            if(selectIndex === 'other'){
+                depositPercent.style.display = 'inline-block';
+                depositPercent.removeAttribute('disabled');
+                depositPercent.value = '';
+                } else {
+                        depositPercent.style.display ='none';
+                        depositPercent.value = selectIndex;
+                       }
+                
+        });
+    } else {
+        depositBank.style.display = 'none';
+        depositAmount.style.display = 'none';
+        depositPercent.style.display = 'none';
+        depositAmount.value = '';
+        depositPercent.value = '';
+        appData.deposit = false;
+    }
+});
